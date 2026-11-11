@@ -7,6 +7,12 @@
       "kind": "mappings",
       "path": "team-assets/mappings.json",
       "title": "EBS / Fusion table mappings"
+    },
+    {
+      "id": "recipes",
+      "kind": "recipes",
+      "path": "team-assets/recipes.json",
+      "title": "Feature Advisor recipes"
     }
   ]
 }
