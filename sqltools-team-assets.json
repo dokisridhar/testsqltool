@@ -1,0 +1,12 @@
+{
+  "format": "sqltools-team-assets",
+  "version": 1,
+  "assets": [
+    {
+      "id": "mappings",
+      "kind": "mappings",
+      "path": "team-assets/mappings.json",
+      "title": "EBS / Fusion table mappings"
+    }
+  ]
+}
