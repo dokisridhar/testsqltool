@@ -1,0 +1,19 @@
+# Runs FNDLOAD / WFLOAD and answers its password prompt from $APPS_PWD (never on a command line).
+# Usage: expect loader.exp FNDLOAD apps 0 Y ...
+set timeout 120
+set stty_init -echo         ;# the password is never echoed into the log
+spawn -noecho {*}$argv
+expect {
+    -nocase -re {password[^\n]*:\s*$} {
+        send -- "$env(APPS_PWD)\r"
+        set timeout -1
+        exp_continue
+    }
+    timeout {
+        puts "loader.exp: no password prompt within 120 seconds; stopped"
+        exit 1
+    }
+    eof
+}
+lassign [wait] pid spawnid oserror status
+exit $status

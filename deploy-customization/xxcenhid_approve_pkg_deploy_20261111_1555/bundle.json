@@ -1,0 +1,1078 @@
+{
+ "version": 1,
+ "title": "XXCENHID_APPROVE_PKG",
+ "release": "12.2.7",
+ "ebs": true,
+ "prefixes": "XX",
+ "mode": "hotpatch",
+ "objects": [
+  {
+   "kind": "SEQUENCE",
+   "owner": "XXCENHID",
+   "name": "XXCENHID_NOTFNS_LIST_LINE_SEQ",
+   "extra": [],
+   "action": "deploy",
+   "how": "found"
+  },
+  {
+   "kind": "SEQUENCE",
+   "owner": "XXCENHID",
+   "name": "XXCENHID_NOTFNS_LIST_SEQ",
+   "extra": [],
+   "action": "deploy",
+   "how": "found"
+  },
+  {
+   "kind": "TABLE",
+   "owner": "APPS",
+   "name": "XXCENHID_DEBUG",
+   "extra": [],
+   "action": "create",
+   "how": "found"
+  },
+  {
+   "kind": "TABLE",
+   "owner": "XXCENHID",
+   "name": "XXCENHID_NOTFNS_LIST_LINES",
+   "extra": [],
+   "action": "create",
+   "how": "found"
+  },
+  {
+   "kind": "TABLE",
+   "owner": "XXCENHID",
+   "name": "XXCENHID_NOTIFICATIONS_LIST",
+   "extra": [],
+   "action": "create",
+   "how": "found"
+  },
+  {
+   "kind": "PACKAGE",
+   "owner": "APPS",
+   "name": "XXCENHID_APPROVE_PKG",
+   "extra": [],
+   "action": "deploy",
+   "how": "root"
+  },
+  {
+   "kind": "LOOKUP TYPE",
+   "owner": "CUSTOM",
+   "name": "XXCENHID_ELIGIBLE_ITEM_TYPES",
+   "extra": [],
+   "action": "deploy",
+   "how": "found"
+  },
+  {
+   "kind": "CONCURRENT PROGRAM",
+   "owner": "XXCENHID",
+   "name": "XXCENHID_APPR_GET_ELIGIBLE_WFS",
+   "extra": [],
+   "action": "deploy",
+   "how": "found"
+  },
+  {
+   "kind": "REQUEST GROUP ENTRY",
+   "owner": "FND",
+   "name": "System Administrator Reports : XXCENHID_APPR_GET_ELIGIBLE_WFS",
+   "extra": [
+    [
+     "group",
+     "System Administrator Reports"
+    ],
+    [
+     "group_app",
+     "FND"
+    ],
+    [
+     "program",
+     "XXCENHID_APPR_GET_ELIGIBLE_WFS"
+    ],
+    [
+     "program_app",
+     "XXCENHID"
+    ]
+   ],
+   "action": "deploy",
+   "how": "found"
+  }
+ ],
+ "parts": [
+  {
+   "file": "xxcenhid_notfns_list_line_seq.sql",
+   "phase": 1,
+   "node_key": [
+    "SEQUENCE",
+    "XXCENHID",
+    "XXCENHID_NOTFNS_LIST_LINE_SEQ"
+   ],
+   "what": "sequence",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [
+    "START WITH is the source's current value"
+   ],
+   "login": "",
+   "check": {
+    "type": "exists",
+    "owner": "XXCENHID",
+    "name": "XXCENHID_NOTFNS_LIST_LINE_SEQ",
+    "otype": "SEQUENCE"
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_notfns_list_seq.sql",
+   "phase": 1,
+   "node_key": [
+    "SEQUENCE",
+    "XXCENHID",
+    "XXCENHID_NOTFNS_LIST_SEQ"
+   ],
+   "what": "sequence",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [
+    "START WITH is the source's current value"
+   ],
+   "login": "",
+   "check": {
+    "type": "exists",
+    "owner": "XXCENHID",
+    "name": "XXCENHID_NOTFNS_LIST_SEQ",
+    "otype": "SEQUENCE"
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_debug_table.sql",
+   "phase": 1,
+   "node_key": [
+    "TABLE",
+    "APPS",
+    "XXCENHID_DEBUG"
+   ],
+   "what": "table (create or alter)",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [
+    "Owned by APPS: EBS keeps custom tables in a registered custom schema (APPS gets only the synonym); validation on the target fails until the table is moved"
+   ],
+   "login": "",
+   "check": {
+    "type": "table",
+    "owner": "APPS",
+    "name": "XXCENHID_DEBUG",
+    "columns": [
+     {
+      "name": "CORRELATION_ID",
+      "type": "VARCHAR2",
+      "length": 500,
+      "chars": 500,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(500 BYTE)"
+     },
+     {
+      "name": "RESPONSE_MESG_TXT",
+      "type": "CLOB",
+      "length": 4000,
+      "chars": 4000,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "CLOB"
+     },
+     {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "length": 7,
+      "chars": 7,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "DATE"
+     },
+     {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     }
+    ],
+    "custom": false
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_debug_indexes.sql",
+   "phase": 1,
+   "node_key": [
+    "TABLE",
+    "APPS",
+    "XXCENHID_DEBUG"
+   ],
+   "what": "indexes (those not there yet)",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {
+    "type": "indexes",
+    "indexes": [
+     [
+      "APPS",
+      "SYS_IL0001007142C00002$$"
+     ]
+    ]
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_notfns_list_lines_table.sql",
+   "phase": 1,
+   "node_key": [
+    "TABLE",
+    "XXCENHID",
+    "XXCENHID_NOTFNS_LIST_LINES"
+   ],
+   "what": "table (create or alter)",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "XXCENHID",
+   "check": {
+    "type": "table",
+    "owner": "XXCENHID",
+    "name": "XXCENHID_NOTFNS_LIST_LINES",
+    "columns": [
+     {
+      "name": "LIST_LINE_ID",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "PROCESS_ACTIVITY",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "ACTIVITY_STATUS",
+      "type": "VARCHAR2",
+      "length": 50,
+      "chars": 50,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(50 BYTE)"
+     },
+     {
+      "name": "ACTIVITY_TYPE",
+      "type": "VARCHAR2",
+      "length": 50,
+      "chars": 50,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(50 BYTE)"
+     },
+     {
+      "name": "ACTIVITY_DISPLAY_NAME",
+      "type": "VARCHAR2",
+      "length": 240,
+      "chars": 240,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(240 BYTE)"
+     },
+     {
+      "name": "PARENT_ACTIVITY_DISPLAY",
+      "type": "VARCHAR2",
+      "length": 240,
+      "chars": 240,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(240 BYTE)"
+     },
+     {
+      "name": "ACTIVITY_NAME",
+      "type": "VARCHAR2",
+      "length": 240,
+      "chars": 240,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(240 BYTE)"
+     },
+     {
+      "name": "PARENT_ACTIVITY",
+      "type": "VARCHAR2",
+      "length": 240,
+      "chars": 240,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(240 BYTE)"
+     },
+     {
+      "name": "NID",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "ASSIGNED_USER",
+      "type": "VARCHAR2",
+      "length": 300,
+      "chars": 300,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(300 BYTE)"
+     },
+     {
+      "name": "NOTIFICATION_SUBJECT",
+      "type": "VARCHAR2",
+      "length": 2000,
+      "chars": 2000,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(2000 BYTE)"
+     },
+     {
+      "name": "ROLE_EMAIL_ADDRESS",
+      "type": "VARCHAR2",
+      "length": 300,
+      "chars": 300,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(300 BYTE)"
+     },
+     {
+      "name": "ROLE_DISPLAY_NAME",
+      "type": "VARCHAR2",
+      "length": 300,
+      "chars": 300,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(300 BYTE)"
+     },
+     {
+      "name": "HID_APPR_MAPPED_USER",
+      "type": "VARCHAR2",
+      "length": 300,
+      "chars": 300,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(300 BYTE)"
+     },
+     {
+      "name": "HID_APPR_NOTFN_SENT",
+      "type": "VARCHAR2",
+      "length": 30,
+      "chars": 30,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(30 BYTE)"
+     },
+     {
+      "name": "HID_APPR_NOTFN_RESPONSE",
+      "type": "VARCHAR2",
+      "length": 4000,
+      "chars": 4000,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(4000 BYTE)"
+     },
+     {
+      "name": "HID_APPR_PROCESS_STATUS",
+      "type": "VARCHAR2",
+      "length": 30,
+      "chars": 30,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(30 BYTE)"
+     },
+     {
+      "name": "ERROR_MESSAGE",
+      "type": "VARCHAR2",
+      "length": 4000,
+      "chars": 4000,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(4000 BYTE)"
+     },
+     {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "length": 7,
+      "chars": 7,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "DATE"
+     },
+     {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "LAST_UPDATE_DATE",
+      "type": "DATE",
+      "length": 7,
+      "chars": 7,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "DATE"
+     },
+     {
+      "name": "LAST_UPDATED_BY",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "LIST_ID",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "CORRELATION_ID",
+      "type": "VARCHAR2",
+      "length": 500,
+      "chars": 500,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(500 BYTE)"
+     }
+    ],
+    "custom": true
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_notifications_list_table.sql",
+   "phase": 1,
+   "node_key": [
+    "TABLE",
+    "XXCENHID",
+    "XXCENHID_NOTIFICATIONS_LIST"
+   ],
+   "what": "table (create or alter)",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "XXCENHID",
+   "check": {
+    "type": "table",
+    "owner": "XXCENHID",
+    "name": "XXCENHID_NOTIFICATIONS_LIST",
+    "columns": [
+     {
+      "name": "ITEM_TYPE",
+      "type": "VARCHAR2",
+      "length": 8,
+      "chars": 8,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "N",
+      "default": null,
+      "spec": "VARCHAR2(8 BYTE)"
+     },
+     {
+      "name": "ITEM_KEY",
+      "type": "VARCHAR2",
+      "length": 240,
+      "chars": 240,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "N",
+      "default": null,
+      "spec": "VARCHAR2(240 BYTE)"
+     },
+     {
+      "name": "ROOT_ACTIVITY",
+      "type": "VARCHAR2",
+      "length": 30,
+      "chars": 30,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "N",
+      "default": null,
+      "spec": "VARCHAR2(30 BYTE)"
+     },
+     {
+      "name": "PROCESS_NAME",
+      "type": "VARCHAR2",
+      "length": 80,
+      "chars": 80,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "N",
+      "default": null,
+      "spec": "VARCHAR2(80 BYTE)"
+     },
+     {
+      "name": "ROOT_ACTIVITY_VERSION",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "N",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "OWNER_ROLE",
+      "type": "VARCHAR2",
+      "length": 320,
+      "chars": 320,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(320 BYTE)"
+     },
+     {
+      "name": "PARENT_ITEM_TYPE",
+      "type": "VARCHAR2",
+      "length": 8,
+      "chars": 8,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(8 BYTE)"
+     },
+     {
+      "name": "PARENT_ITEM_KEY",
+      "type": "VARCHAR2",
+      "length": 240,
+      "chars": 240,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(240 BYTE)"
+     },
+     {
+      "name": "PARENT_CONTEXT",
+      "type": "VARCHAR2",
+      "length": 2000,
+      "chars": 2000,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(2000 BYTE)"
+     },
+     {
+      "name": "BEGIN_DATE",
+      "type": "DATE",
+      "length": 7,
+      "chars": 7,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "N",
+      "default": null,
+      "spec": "DATE"
+     },
+     {
+      "name": "END_DATE",
+      "type": "DATE",
+      "length": 7,
+      "chars": 7,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "DATE"
+     },
+     {
+      "name": "USER_KEY",
+      "type": "VARCHAR2",
+      "length": 240,
+      "chars": 240,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(240 BYTE)"
+     },
+     {
+      "name": "NAME",
+      "type": "VARCHAR2",
+      "length": 8,
+      "chars": 8,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "N",
+      "default": null,
+      "spec": "VARCHAR2(8 BYTE)"
+     },
+     {
+      "name": "DISPLAY_NAME",
+      "type": "VARCHAR2",
+      "length": 80,
+      "chars": 80,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "N",
+      "default": null,
+      "spec": "VARCHAR2(80 BYTE)"
+     },
+     {
+      "name": "ROLE_NAME",
+      "type": "VARCHAR2",
+      "length": 4000,
+      "chars": 4000,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(4000 BYTE)"
+     },
+     {
+      "name": "STATUS_CODE",
+      "type": "VARCHAR2",
+      "length": 4000,
+      "chars": 4000,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(4000 BYTE)"
+     },
+     {
+      "name": "ROLE_EMAIL",
+      "type": "VARCHAR2",
+      "length": 4000,
+      "chars": 4000,
+      "char_used": "B",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "VARCHAR2(4000 BYTE)"
+     },
+     {
+      "name": "LIST_ID",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "length": 7,
+      "chars": 7,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "DATE"
+     },
+     {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     },
+     {
+      "name": "LAST_UPDATE_DATE",
+      "type": "DATE",
+      "length": 7,
+      "chars": 7,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "DATE"
+     },
+     {
+      "name": "LAST_UPDATED_BY",
+      "type": "NUMBER",
+      "length": 22,
+      "chars": 22,
+      "char_used": "",
+      "precision": null,
+      "scale": null,
+      "nullable": "Y",
+      "default": null,
+      "spec": "NUMBER"
+     }
+    ],
+    "custom": true
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_approve_pkg.pks",
+   "phase": 1,
+   "node_key": [
+    "PACKAGE",
+    "APPS",
+    "XXCENHID_APPROVE_PKG"
+   ],
+   "what": "package spec",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {
+    "type": "code",
+    "owner": "APPS",
+    "name": "XXCENHID_APPROVE_PKG",
+    "otype": "PACKAGE",
+    "n": 24,
+    "h": 57012725973
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_notfns_list_line_seq_synonyms.sql",
+   "phase": 2,
+   "node_key": [
+    "SEQUENCE",
+    "XXCENHID",
+    "XXCENHID_NOTFNS_LIST_LINE_SEQ"
+   ],
+   "what": "synonyms",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {
+    "type": "synonyms",
+    "owner": "XXCENHID",
+    "name": "XXCENHID_NOTFNS_LIST_LINE_SEQ",
+    "synonyms": [
+     [
+      "APPS",
+      "XXCENHID_NOTFNS_LIST_LINE_SEQ"
+     ]
+    ]
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_notfns_list_seq_synonyms.sql",
+   "phase": 2,
+   "node_key": [
+    "SEQUENCE",
+    "XXCENHID",
+    "XXCENHID_NOTFNS_LIST_SEQ"
+   ],
+   "what": "synonyms",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {
+    "type": "synonyms",
+    "owner": "XXCENHID",
+    "name": "XXCENHID_NOTFNS_LIST_SEQ",
+    "synonyms": [
+     [
+      "APPS",
+      "XXCENHID_NOTFNS_LIST_SEQ"
+     ]
+    ]
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_notfns_list_lines_ev.sql",
+   "phase": 2,
+   "node_key": [
+    "TABLE",
+    "XXCENHID",
+    "XXCENHID_NOTFNS_LIST_LINES"
+   ],
+   "what": "editioning view and APPS synonym",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {
+    "type": "ev",
+    "owner": "XXCENHID",
+    "name": "XXCENHID_NOTFNS_LIST_LINES",
+    "after": "xxcenhid_notfns_list_lines_table.sql"
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_notifications_list_ev.sql",
+   "phase": 2,
+   "node_key": [
+    "TABLE",
+    "XXCENHID",
+    "XXCENHID_NOTIFICATIONS_LIST"
+   ],
+   "what": "editioning view and APPS synonym",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {
+    "type": "ev",
+    "owner": "XXCENHID",
+    "name": "XXCENHID_NOTIFICATIONS_LIST",
+    "after": "xxcenhid_notifications_list_table.sql"
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "xxcenhid_approve_pkg.pkb",
+   "phase": 3,
+   "node_key": [
+    "PACKAGE",
+    "APPS",
+    "XXCENHID_APPROVE_PKG"
+   ],
+   "what": "package body",
+   "runner": "sqlplus",
+   "upload": "",
+   "download": "",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {
+    "type": "code",
+    "owner": "APPS",
+    "name": "XXCENHID_APPROVE_PKG",
+    "otype": "PACKAGE BODY",
+    "n": 405,
+    "h": 878531427931
+   },
+   "has_content": true,
+   "binary": false
+  },
+  {
+   "file": "lookup_type_custom_xxcenhid_eligible_item_types.ldt",
+   "phase": 4,
+   "node_key": [
+    "LOOKUP TYPE",
+    "CUSTOM",
+    "XXCENHID_ELIGIBLE_ITEM_TYPES"
+   ],
+   "what": "Lookup type",
+   "runner": "fndload",
+   "upload": "FNDLOAD apps/\"$APPS_PWD\" 0 Y UPLOAD $FND_TOP/patch/115/import/aflvmlu.lct lookup_type_custom_xxcenhid_eligible_item_types.ldt - UPLOAD_MODE=REPLACE CUSTOM_MODE=FORCE",
+   "download": "FNDLOAD apps/\"$APPS_PWD\" 0 Y DOWNLOAD $FND_TOP/patch/115/import/aflvmlu.lct lookup_type_custom_xxcenhid_eligible_item_types.ldt FND_LOOKUP_TYPE APPLICATION_SHORT_NAME=\"CUSTOM\" LOOKUP_TYPE=\"XXCENHID_ELIGIBLE_ITEM_TYPES\"",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {},
+   "has_content": false,
+   "binary": false
+  },
+  {
+   "file": "concurrent_program_xxcenhid_xxcenhid_appr_get_eligible_wfs.ldt",
+   "phase": 4,
+   "node_key": [
+    "CONCURRENT PROGRAM",
+    "XXCENHID",
+    "XXCENHID_APPR_GET_ELIGIBLE_WFS"
+   ],
+   "what": "Concurrent program",
+   "runner": "fndload",
+   "upload": "FNDLOAD apps/\"$APPS_PWD\" 0 Y UPLOAD $FND_TOP/patch/115/import/afcpprog.lct concurrent_program_xxcenhid_xxcenhid_appr_get_eligible_wfs.ldt - UPLOAD_MODE=REPLACE CUSTOM_MODE=FORCE",
+   "download": "FNDLOAD apps/\"$APPS_PWD\" 0 Y DOWNLOAD $FND_TOP/patch/115/import/afcpprog.lct concurrent_program_xxcenhid_xxcenhid_appr_get_eligible_wfs.ldt PROGRAM APPLICATION_SHORT_NAME=\"XXCENHID\" CONCURRENT_PROGRAM_NAME=\"XXCENHID_APPR_GET_ELIGIBLE_WFS\"",
+   "source_path": "",
+   "notes": [],
+   "login": "",
+   "check": {},
+   "has_content": false,
+   "binary": false
+  },
+  {
+   "file": "request_group_fnd_system_administrator_reports.ldt",
+   "phase": 4,
+   "node_key": [
+    "REQUEST GROUP ENTRY",
+    "FND",
+    "System Administrator Reports : XXCENHID_APPR_GET_ELIGIBLE_WFS"
+   ],
+   "what": "Request group",
+   "runner": "fndload",
+   "upload": "FNDLOAD apps/\"$APPS_PWD\" 0 Y UPLOAD $FND_TOP/patch/115/import/afcpreqg.lct request_group_fnd_system_administrator_reports.ldt - UPLOAD_MODE=REPLACE CUSTOM_MODE=FORCE",
+   "download": "FNDLOAD apps/\"$APPS_PWD\" 0 Y DOWNLOAD $FND_TOP/patch/115/import/afcpreqg.lct request_group_fnd_system_administrator_reports.ldt REQUEST_GROUP APPLICATION_SHORT_NAME=\"FND\" REQUEST_GROUP_NAME=\"System Administrator Reports\"",
+   "source_path": "",
+   "notes": [
+    "Downloads the whole request group System Administrator Reports: check the target's own entries are in it"
+   ],
+   "login": "",
+   "check": {},
+   "has_content": false,
+   "binary": false
+  }
+ ],
+ "errors": []
+}

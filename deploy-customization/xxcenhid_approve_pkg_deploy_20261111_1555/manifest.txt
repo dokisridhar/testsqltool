@@ -1,0 +1,39 @@
+# XXCENHID_APPROVE_PKG — E-Business Suite 12.2.7
+# files in deploy order
+
+## database objects
+xxcenhid_notfns_list_line_seq.sql                  sequence
+    note: START WITH is the source's current value
+xxcenhid_notfns_list_seq.sql                       sequence
+    note: START WITH is the source's current value
+xxcenhid_debug_table.sql                           table (create or alter)
+    note: Owned by APPS: EBS keeps custom tables in a registered custom schema (APPS gets only the synonym); validation on the target fails until the table is moved
+xxcenhid_debug_indexes.sql                         indexes (those not there yet)
+xxcenhid_notfns_list_lines_table.sql               table (create or alter)
+xxcenhid_notifications_list_table.sql              table (create or alter)
+xxcenhid_approve_pkg.pks                           package spec
+## grants, synonyms and editioning views
+xxcenhid_notfns_list_line_seq_synonyms.sql         synonyms
+xxcenhid_notfns_list_seq_synonyms.sql              synonyms
+xxcenhid_notfns_list_lines_ev.sql                  editioning view and APPS synonym
+xxcenhid_notifications_list_ev.sql                 editioning view and APPS synonym
+## code bodies
+xxcenhid_approve_pkg.pkb                           package body
+## AOL objects and workflows
+lookup_type_custom_xxcenhid_eligible_item_types.ldt Lookup type  [from the source server]
+concurrent_program_xxcenhid_xxcenhid_appr_get_eligible_wfs.ldt Concurrent program  [from the source server]
+request_group_fnd_system_administrator_reports.ldt Request group  [from the source server]
+    note: Downloads the whole request group System Administrator Reports: check the target's own entries are in it
+
+## how to deploy
+1. On the SOURCE application tier, in a copy of this folder: ./download.sh <environment file> run
+   then copy the downloaded files (the @@OK lines) back into this folder.
+2. Copy the folder (or Make Zip) to the TARGET application tier and run:
+   ./deploy.sh -e <environment file> -v  validates the target only: changes nothing
+   ./deploy.sh -e <environment file>     validates, then deploys (-l lists the steps,
+                                         -s N resumes at step N)
+   Validation report: logs/validation.txt. A broken rule or a change that could lose data
+   aborts before anything is changed (exit 3); objects the target already has unchanged are
+   skipped; FNDLOAD / WFLOAD objects are backed up into logs/backup/ before uploading.
+   Unattended (CI/CD): set APPS_PWD and, if asked for, SCHEMA_PWD_<SCHEMA>.
+   Logs are written to logs/; deploy.sh stops at the first step with errors.
